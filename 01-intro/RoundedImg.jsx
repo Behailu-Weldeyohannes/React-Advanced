@@ -27,5 +27,6 @@ RoundedImg.PropTypes = {
 }
 
 RoundedImg.defaultProps = {
+    
     borderRadius: "50%"
 }
