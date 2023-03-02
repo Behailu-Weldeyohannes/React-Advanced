@@ -1,7 +1,8 @@
 import React from "react"
 // import CTA from "./CTA"
-import Favorite from "./components/Favorite";
-import Menu from "./components/Menu";
+// import Favorite from "./components/Favorite";
+// import Menu from "./components/Menu";
+import Example from "./Example";
 
 
 function App() {
@@ -21,11 +22,28 @@ function App() {
           <button>Submit</button>
         </form>
       </CTA> */}
-      <div>
+      {/* <div>
         <Menu />
         <hr />
         <Favorite />
-      </div>
+      </div> */}
+      
+        <Example  render={
+          function(number){
+            return (
+            <h1>{number >= 0 ? "Positive" : "Negative"}</h1>
+            
+            )}
+        }/>
+        <Example  render={function(bool, number){
+             return(
+              <div>
+                <h1>{number}</h1>
+                <h1>{bool ? "true" : "False"}</h1>
+              </div>
+             )
+        }}/>
+      
     </div>
   );
 }
