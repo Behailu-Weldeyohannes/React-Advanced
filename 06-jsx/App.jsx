@@ -108,8 +108,7 @@ function App() {
 export default App;
 */
 
-
-
+/*
 const orderAmend = {
   ...order,
   item: "Pizza Prosciutto"
@@ -126,3 +125,184 @@ function OrderList(){
     <Order {...order} />
   )
 }
+*/
+
+// Higher-order components HOC
+/*
+import React, { useState, useEffect } from "react";
+
+const withMousePosition = (WrappedComponent) => {
+  return (props) => {
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+      const handleMousePositionChange = () => {
+        setMousePosition({
+          x: e.clientX,
+          y: e.clientY,
+        });
+      };
+      window.addEventListener("mousemove", handleMousePositionChange);
+
+      return () => {
+        window.removeEventListener("mousemove", handleMousePositionChange);
+      };
+    }, []);
+    return <WrappedComponent {...props} mousePosition={mousePosition} />;
+  };
+};
+
+const PanelMouseLogger = ({ mousePosition }) => {
+  if (!mousePosition) {
+    return null;
+  }
+  return (
+    <div className="BasicTracker">
+      <p>Mouse position:</p>
+      <div className="Row">
+        <span>X: {mousePosition.x}</span>
+        <span>Y: {mousePosition.y}</span>
+      </div>
+    </div>
+  );
+};
+
+const PointMouseLogger = ({ mousePosition }) => {
+  if (!mousePosition) {
+    return null;
+  }
+  return (
+    <p>
+      ({mousePosition.x}, {mousePosition.y})
+    </p>
+  );
+};
+const PanelMouseTracker = withMousePosition(PanelMouseLogger)
+const PointMouseTracker = withMousePosition(PointMouseLogger)
+function App() {
+  return (
+    <div className="App">
+      <header className="Header">Little Lemon Restaurant 🍕</header>
+      <PanelMouseTracker />
+      <PointMouseTracker />
+    </div>
+  );
+}
+export default App;
+*/
+/*
+// Render props
+import React, { useEffect, useState } from "react";
+
+const DataFetcher = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (URL.includes("desserts")) {
+      setData(["cake", "ice cream", "pie", "brownie"]);
+    } else {
+      setData(["water", "soda", "juice"]);
+    }
+  }, []);
+
+  return render(data);
+};
+
+const DessertsCount = () => {
+  return (
+    <DataFetcher
+      url="https://littlelemon/desserts"
+      render={(data) => <p>{data.length} desserts</p>}
+    />
+  );
+};
+
+const DrinksCount = () => {
+  return (
+    <DataFetcher
+      url="https://littlelemon/drinks"
+      render={(data) => <h3>{data.length} drinks</h3>}
+    />
+  );
+};
+
+function App() {
+  return (
+    <div className="App">
+      <header className="Header"> Little Lemon Restaurant 🍕</header>
+      <DessertsCount />
+      <DrinksCount />
+    </div>
+  );
+}
+
+export default App;
+*/
+// Implementing scroller position with render props
+
+import "./App.css";
+import { useEffect, useState } from "react";
+
+const MousePosition = ({ render }) => {
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  useEffect(() => {
+    const handleMousePositionChange = (e) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMousePositionChange);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMousePositionChange);
+    };
+  }, []);
+
+  return render({ mousePosition });
+};
+
+const PanelMouseLogger = () => {
+  return (
+    <div className="BasicTracker">
+      <p>Mouse position:</p>
+      <MousePosition
+        render={({ mousePosition }) => (
+          <div className="Row">
+            <span>x: {mousePosition.x}</span>
+            <span>y: {mousePosition.y}</span>
+          </div>
+        )}
+      />
+    </div>
+  );
+};
+
+const PointMouseLogger = () => {
+  return (
+    <MousePosition
+      render={({ mousePosition }) => (
+        <p>
+          ({mousePosition.x}, {mousePosition.y})
+        </p>
+      )}
+    />
+  );
+};
+
+function App() {
+  return (
+    <div className="App">
+      <header className="Header">Little Lemon Restaurant 🍕</header>
+      <PanelMouseLogger />
+      <PointMouseLogger />
+    </div>
+  );
+}
+
+export default App;
