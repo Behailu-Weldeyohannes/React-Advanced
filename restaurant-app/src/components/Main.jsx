@@ -1,10 +1,12 @@
+const Main = () => {
+  return (
+    <main>
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/booking" element={<BookingPage />}></Route>
+      </Routes>
+    </main>
+  );
+};
 
-const Main = () =>{
-    return(
-        <main>
-            <h2>Restaurant</h2>
-        </main>
-    )
-}
-
-export default Main
+export default Main;

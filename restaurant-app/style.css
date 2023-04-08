@@ -1,0 +1,15 @@
+.navigation {
+  height: 3rem;
+  display: grid;
+  align-items: center;
+
+}
+
+
+
+body{
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
